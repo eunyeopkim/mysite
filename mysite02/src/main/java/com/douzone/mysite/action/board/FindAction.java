@@ -1,6 +1,7 @@
 package com.douzone.mysite.action.board;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,16 +12,19 @@ import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.action.Action;
 import com.douzone.web.util.WebUtil;
 
-public class ViewAction implements Action {
+public class FindAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		long no = Long.parseLong(request.getParameter("no"));
-		BoardVo vo = new BoardRepository().view(no);
-		new BoardRepository().viewUpdate(no);
-		request.setAttribute("vo", vo);
-		WebUtil.forward("/WEB-INF/views/board/view.jsp", request, response);
-
+		String kwd = request.getParameter("kwd");
+		
+		System.out.println(kwd);
+		BoardVo vo = new BoardVo();
+		vo.setTitle(kwd);
+		
+		List<BoardVo> list = new BoardRepository().findTitle(vo);
+		request.setAttribute("list", list);
+		WebUtil.redirect(request.getContextPath()+"/board?a=list", request, response);
 	}
 
 }

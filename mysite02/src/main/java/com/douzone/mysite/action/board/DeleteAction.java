@@ -19,7 +19,7 @@ public class DeleteAction implements Action{
 		Long userNo = Long.parseLong(request.getParameter("userNo"));
 		BoardVo vo = new BoardVo();
 		vo.setNo(no);
-		vo.setUser_no(userNo);
+		vo.setUserNo(userNo);
 		new BoardRepository().delete(vo);
 		WebUtil.redirect(request.getContextPath()+"/board?a=list", request, response);
 	}

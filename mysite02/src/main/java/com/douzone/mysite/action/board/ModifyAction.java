@@ -19,12 +19,12 @@ public class ModifyAction implements Action {
 		String contents = request.getParameter("contents");
 		long no = Long.parseLong(request.getParameter("no"));
 		
-		BoardVo bvo = new BoardVo();
-		bvo.setTitle(title);
-		bvo.setContents(contents);
-		bvo.setNo(no);
+		BoardVo vo = new BoardVo();
+		vo.setTitle(title);
+		vo.setContents(contents);
+		vo.setNo(no);
 		
-		new BoardRepository().update(bvo);
+		new BoardRepository().update(vo);
 		WebUtil.redirect(request.getContextPath()+"/board?a=view&no="+no, request, response);
 
 	}

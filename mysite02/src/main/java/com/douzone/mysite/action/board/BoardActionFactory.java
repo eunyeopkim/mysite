@@ -21,6 +21,8 @@ public class BoardActionFactory extends ActionFactory {
 			return new ModifyAction();
 		case "modifyform":
 			return new ModifyFormAction();
+		case "find":
+			return new FindAction();
 		case "reply":
 			return new ReplyAction();
 		case "replyform":

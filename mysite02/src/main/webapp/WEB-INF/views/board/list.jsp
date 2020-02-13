@@ -17,8 +17,10 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board?a=find&title=${vo.title}" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
+					<input type="hidden" id="no" name= "no">
+					
 					 <input type="submit" value="찾기">
 				</form>
 				<c:set var='listCount' value='${fn:length(list)}' />
@@ -35,14 +37,19 @@
 					<c:forEach items="${list}" var="vo" varStatus='status'>
 						<tr>
 							<td>${listCount-status.index}</td>
-							<td style="text-align:left; padding-left: ${20*vo.oNo}px">
-							<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" /><a
-								href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							<td style="text-align:left; padding-left: ${20*vo.depth}px">
+
+							<c:if test="${vo.depth ne 0}">
+								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
+							</c:if>
+							
+							<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							
 							<td>${vo.userName }</td>
 							<td>${vo.hit}</td>
 							<td>${vo.regDate }</td>
-							<c:if test="${authUser.no eq vo.user_no }">
-								<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}&userNo=${vo.user_no}" class="del">삭제</a></td>
+							<c:if test="${authUser.no eq vo.userNo }">
+								<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}&userNo=${vo.userNo}" class="del">삭제</a></td>
 							</c:if>
 						</tr>
 					</c:forEach>

@@ -18,7 +18,6 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board" class="board-form">
-			<input type="hidden" name="no" value="no" />
 				<table class="tbl-ex">
 					<tr>
 						<th colspan="2">글보기</th>
@@ -37,7 +36,8 @@
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=replyform&no=${vo.no}">답글</a>
+
+					<a href="${pageContext.request.contextPath }/board?a=replyform&no=${vo.no}&gNo=${vo.gNo}&oNo=${vo.oNo}&depth=${vo.depth}&userNo=${vo.userNo}">답글</a>
 					<a href="${pageContext.request.contextPath }/board?a=list">글목록</a>
 					<a href="${pageContext.request.contextPath }/board?a=modifyform&no=${vo.no}">글수정</a>
 					

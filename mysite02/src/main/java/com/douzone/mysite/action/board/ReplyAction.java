@@ -13,26 +13,38 @@ import com.douzone.mysite.vo.BoardVo;
 import com.douzone.web.action.Action;
 import com.douzone.web.util.WebUtil;
 
-public class WriteAction implements Action {
+public class ReplyAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		
 		String title = request.getParameter("title");
 		String contents = request.getParameter("contents");
-		long userno = Long.parseLong(request.getParameter("userno"));
+		long no = Long.parseLong(request.getParameter("no"));
+		long gNo = Long.parseLong(request.getParameter("gNo"));
+		long oNo = Long.parseLong(request.getParameter("oNo"));
+		long depth = Long.parseLong(request.getParameter("depth"));
+		long userNo = Long.parseLong(request.getParameter("userNo"));
+		
 		
 		BoardVo vo = new BoardVo();
 		Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	    
 	    vo.setTitle(title);
 	    vo.setContents(contents);
-	    vo.setUserNo(userno);
+	    vo.setNo(no);
 	    vo.setRegDate(sdf.format(date));
-		
-		System.out.println(vo);
+	    vo.setgNo(gNo);
+	    vo.setoNo(oNo);
+	    vo.setDepth(depth);
+	    vo.setUserNo(userNo);
 		request.setAttribute("vo", vo);
-		new BoardRepository().insert(vo);
-		WebUtil.redirect(request.getContextPath()+"/board?a=list", request, response);
+		
+		new BoardRepository().replyUpdate(vo);
+		new BoardRepository().replyInsert(vo);
+		WebUtil.redirect(request.getContextPath()+"/board?a=list&no="+no, request, response);
 
 	}
 
