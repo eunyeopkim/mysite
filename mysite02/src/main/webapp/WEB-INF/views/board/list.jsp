@@ -22,9 +22,8 @@
 						
 					 <input type="submit" value="찾기">
 				</form>
-				<c:set var='listCount' value='${fn:length(list)}' />
-
 				<table class="tbl-ex">
+				<c:set var='listCount' value='${fn:length(list)}' />
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
@@ -33,17 +32,26 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
+					
 					<c:forEach items="${list}" var="vo" varStatus='status'>
 						<tr>
 							<td>${listCount-status.index}</td>
 							<td style="text-align:left; padding-left: ${20*vo.depth}px">
-
-							<c:if test="${vo.depth ne 0}">
-								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
-							</c:if>
-							
-							<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
-							
+							<c:choose>
+								<c:when test="${empty vo.title }">
+									<c:if test="${vo.depth ne 0}">
+										<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
+									</c:if>
+									<a>삭 제</a>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${vo.depth ne 0}">
+										<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
+									</c:if>
+									<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a>
+								</c:otherwise>
+							</c:choose>
+							</td>
 							<td>${vo.userName }</td>
 							<td>${vo.hit}</td>
 							<td>${vo.regDate }</td>
@@ -57,15 +65,41 @@
 
 				<!-- pager 추가 -->
 				<div class="pager">
-					<ul>
-						<li><a href="">◀</a></li>
-						<li class="selected">1</li>
-						<li><a href="">2</a></li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
-					</ul>
+				    <ul>
+				        <c:if test="${ vo.curPage > 5 && !empty kwd }">
+				            <li><a href="${pageContext.servletContext.contextPath}/board?a=list&page=${ vo.blockStartNum - 1 }&kwd=${ kwd }
+				           &curPage=${vo.curPage}">◀</a></li>
+				        </c:if>
+				        
+				        <c:if test="${ curPageNum > 5 }">
+				            <li><a href="${pageContext.servletContext.contextPath}/board?a=list&page=${ vo.blockStartNum - 1 }">◀</a></li>
+				        </c:if>
+				        
+				        <c:forEach var="i" begin="${ vo.blockStartNum }" end="${ vo.blockLastNum }">
+				            <c:choose>
+				                <c:when test="${ i > vo.lastPageNum }">
+				                    <li>${ i }</li>
+				                </c:when>
+				                <c:when test="${ i == vo.curPage }">
+				                    <li class="selected">${ i }</li>
+				                </c:when>
+				                <c:when test="${ !empty kwd}">
+				                    <li><a href="${pageContext.servletContext.contextPath}/board?a=list&page=${ i }&kwd=${ kwd }">${ i }</a></li>
+				                </c:when>
+				                <c:otherwise>
+				                    <li><a href="${pageContext.servletContext.contextPath}/board?a=list&page=${ i }">${ i }</a></li>
+				                </c:otherwise>
+				            </c:choose>
+				        </c:forEach>
+				        
+				        <c:if test="${ vo.lastPageNum > vo.blockLastNum && !empty kwd }">
+				            <li><a href="${pageContext.servletContext.contextPath}/board?a=list&page=${ vo.blockLastNum + 1 }&kwd=${ kwd }">▶</a></li>
+				        </c:if>
+				        
+				        <c:if test="${ vo.lastPageNum > vo.blockLastNum }">
+				            <li><a href="${pageContext.servletContext.contextPath}/board?a=list&page=${ vo.blockLastNum + 1 }">▶</a></li>
+				        </c:if>
+				    </ul>
 				</div>
 				<!-- pager 추가 -->
 				<c:if test="${not empty authUser}">

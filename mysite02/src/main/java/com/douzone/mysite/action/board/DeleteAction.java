@@ -20,7 +20,7 @@ public class DeleteAction implements Action{
 		BoardVo vo = new BoardVo();
 		vo.setNo(no);
 		vo.setUserNo(userNo);
-		new BoardRepository().delete(vo);
+		new BoardRepository().deleteUpdate(vo);
 		WebUtil.redirect(request.getContextPath()+"/board?a=list", request, response);
 	}
 

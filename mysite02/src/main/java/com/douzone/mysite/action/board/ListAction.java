@@ -17,7 +17,7 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		List<BoardVo> list = new BoardRepository().findAll();
-		request.setAttribute("list", list);
+		request.setAttribute("list", list);	
 		WebUtil.forward("/WEB-INF/views/board/list.jsp", request, response);
 
 	}
