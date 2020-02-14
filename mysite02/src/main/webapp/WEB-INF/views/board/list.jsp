@@ -19,8 +19,7 @@
 			<div id="board">
 				<form id="search_form" action="${pageContext.request.contextPath }/board?a=find&title=${vo.title}" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
-					<input type="hidden" id="no" name= "no">
-					
+						
 					 <input type="submit" value="찾기">
 				</form>
 				<c:set var='listCount' value='${fn:length(list)}' />

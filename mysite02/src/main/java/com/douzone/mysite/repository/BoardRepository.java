@@ -263,10 +263,9 @@ public class BoardRepository {
 
 			String sql = "select b.no, b.title, b.contents, b.hit, b.reg_date, b.g_no, b.o_no, b.depth, b.user_no, u.name" + 
 					" from board b, user u" + 
-					" where b.user_no=u.no and b.title like \"%?%\"" + 
+					" where b.user_no=u.no and b.title like concat('%',?,'%')" + 
 					" order by g_no desc, o_no asc";
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(bvo);
 			pstmt.setString(1, bvo.getTitle());
 			rs = pstmt.executeQuery();
 

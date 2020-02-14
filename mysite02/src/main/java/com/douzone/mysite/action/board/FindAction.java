@@ -18,13 +18,12 @@ public class FindAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String kwd = request.getParameter("kwd");
 		
-		System.out.println(kwd);
 		BoardVo vo = new BoardVo();
 		vo.setTitle(kwd);
 		
 		List<BoardVo> list = new BoardRepository().findTitle(vo);
 		request.setAttribute("list", list);
-		WebUtil.redirect(request.getContextPath()+"/board?a=list", request, response);
+		WebUtil.forward("/WEB-INF/views/board/list.jsp", request, response);
 	}
 
 }
