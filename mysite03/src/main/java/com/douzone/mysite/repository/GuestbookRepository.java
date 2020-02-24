@@ -8,8 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.douzone.mysite.vo.GuestbookVo;
 
+@Repository
 public class GuestbookRepository {
 	public List<GuestbookVo> findAll() {
 		List<GuestbookVo> result = new ArrayList<>();
@@ -63,24 +66,21 @@ public class GuestbookRepository {
 
 		return result;
 	}
-	public Boolean insert(GuestbookVo vo) {
-		boolean result = false;
+	public int insert(GuestbookVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
+		int count = 0;
 		try {
 			conn = getConnection();
 			// insert into guestbook values(null, '김은엽','반가워요~', '1234', sysdate())
-			String sql = "insert into guestbook values(null, ?, ?, ?, ?)";
+			String sql = "insert into guestbook values(null, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getContents());
 			pstmt.setString(3, vo.getPassword());
-			pstmt.setString(4, vo.getRegDate());
 
-			int count = pstmt.executeUpdate();
-			result = count == 1;
+			count = pstmt.executeUpdate();
+
 
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
@@ -96,14 +96,13 @@ public class GuestbookRepository {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return count;
 
 	}
-	public Boolean delete(GuestbookVo vo) {
-		boolean result = false;
+	public int delete(GuestbookVo vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
+		int count = 0;
 		try {
 			conn = getConnection();
 			// delete from guestbook where name='박춘봉';
@@ -112,10 +111,7 @@ public class GuestbookRepository {
 			pstmt.setLong(1, vo.getNo());
 			pstmt.setString(2, vo.getPassword());
 			
-
-			int count = pstmt.executeUpdate();
-
-			result = count == 1;
+			count = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
@@ -131,7 +127,7 @@ public class GuestbookRepository {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return count;
 
 	}
 	
