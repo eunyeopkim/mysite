@@ -46,8 +46,14 @@ public class UserController {
 		if(authUser == null) {
 			return "user/login";
 		}
-		
 		session.setAttribute("authUser", authUser);
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("authUser");
+		session.invalidate();
 		return "redirect:/";
 	}
 	
