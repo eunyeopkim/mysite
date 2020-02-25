@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.GuestbookRepositoryException;
 import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
@@ -23,7 +24,7 @@ public class GuestbookRepository {
 
 			conn = getConnection();
 
-			String sql = "select no, name, password, contents, reg_date" + 
+			String sql = "selec no, name, password, contents, reg_date" + 
 					" from guestbook" + 
 					" order by no desc";
 			pstmt = conn.prepareStatement(sql);
@@ -47,7 +48,7 @@ public class GuestbookRepository {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("error: " + e);
+			throw new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -83,7 +84,7 @@ public class GuestbookRepository {
 
 
 		} catch (SQLException e) {
-			System.out.println("error: " + e);
+			throw new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -114,7 +115,7 @@ public class GuestbookRepository {
 			count = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			System.out.println("error: " + e);
+			throw new GuestbookRepositoryException(e.getMessage());
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -140,7 +141,7 @@ public class GuestbookRepository {
 			String url = "jdbc:mysql://192.168.1.108:3307/webdb";
 			conn = DriverManager.getConnection(url, "webdb", "webdb");
 		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패: " + e);
+			throw new GuestbookRepositoryException("드라이버 로딩실패:" + e);
 		}
 		return conn;
 	}
