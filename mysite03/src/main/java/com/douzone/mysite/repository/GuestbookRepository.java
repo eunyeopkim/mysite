@@ -24,7 +24,7 @@ public class GuestbookRepository {
 
 			conn = getConnection();
 
-			String sql = "selec no, name, password, contents, reg_date" + 
+			String sql = "select no, name, password, contents, reg_date" + 
 					" from guestbook" + 
 					" order by no desc";
 			pstmt = conn.prepareStatement(sql);

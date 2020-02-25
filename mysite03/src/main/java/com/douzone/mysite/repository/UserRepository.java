@@ -19,7 +19,7 @@ public class UserRepository {
 		int count = 0 ;
 		try {
 			conn = getConnection();
-			String sql = "insert into user values(null, ?, ?, ?, ?, now())";
+			String sql = "inser into user values(null, ?, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
