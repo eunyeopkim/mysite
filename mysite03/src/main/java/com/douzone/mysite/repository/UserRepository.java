@@ -32,8 +32,8 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByNo", no);
 	}
 
-//	public Boolean update(UserVo vo) {
-//		boolean result = false;
+	public int update(UserVo userVo) {
+		return sqlSession.update("user.update", userVo);
 //		Connection conn = null;
 //		PreparedStatement pstmt = null;
 //
@@ -58,8 +58,8 @@ public class UserRepository {
 //				pstmt.setString(3, vo.getGender());
 //				pstmt.setLong(4, vo.getNo());
 //				
-//				int count = pstmt.executeUpdate();
-//				result = count == 1;
+//				count = pstmt.executeUpdate();
+//
 //			}
 //			
 //
@@ -77,9 +77,11 @@ public class UserRepository {
 //				e.printStackTrace();
 //			}
 //		}
-//		return result;
-//		
-//	}
+
+		
+
+		
+	}
 	
 
 }
