@@ -14,8 +14,26 @@
 		<![CDATA[
 		select no, name, password, contents, reg_date as regDate
 		  from guestbook
-		 where no < #{no }
+		 <if test=' _parameter > 0 '> 
+		 	where no < #{no }
+		 </if>
 		 order by no desc
 		]]>
 	</select>
+	<insert id="insert" parameterType="guestbookvo">
+		<![CDATA[
+		insert 
+		into guestbook 
+		values(null, #{name }, #{contents }, #{password }, now())
+		]]>
+	</insert>
+	
+	<delete id="delete" parameterType="guestbookvo">
+		<![CDATA[
+		delete 
+		from guestbook 
+		where no= #{no } and password=#{password }
+		]]>
+	
+	</delete>
 </mapper>

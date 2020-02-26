@@ -15,13 +15,12 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post"
-					action="${pageContext.request.contextPath }/board?a=reply&no=${vo.no}">
-					<input type="hidden" name="no" value="${vo.no}">
-					<input type="hidden" name="gNo" value="${vo.gNo}" />
-					<input type="hidden" name="oNo" value="${vo.oNo }" />
-					<input type="hidden" name="depth" value="${vo.depth}" />
-					<input type="hidden" name="userNo" value="${vo.userNo}" />
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/write">
+					<input type="hidden" name="gNo" value="${boardVo.gNo }">
+					<input type="hidden" name="oNo" value="${boardVo.oNo }">
+					<input type="hidden" name="depth" value="${boardVo.depth }">
+					<input type="hidden" name="p" value="${param.p }" />
+					<input type="hidden" name="kwd" value="${param.kwd }" />
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">답글</th>
@@ -38,7 +37,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=view?no=${vo.no}">취소</a>
+						<a href="${pageContext.request.contextPath }/board/view/${vo.no}">취소</a>
 						<input type="submit" value="답글">
 					</div>
 				</form>
