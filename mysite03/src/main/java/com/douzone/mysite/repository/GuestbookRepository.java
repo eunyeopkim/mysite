@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.exception.GuestbookRepositoryException;
@@ -15,56 +17,11 @@ import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
 public class GuestbookRepository {
+	@Autowired
+	private SqlSession sqlSession;
+	
 	public List<GuestbookVo> findAll() {
-		List<GuestbookVo> result = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try {
-
-			conn = getConnection();
-
-			String sql = "select no, name, password, contents, reg_date" + 
-					" from guestbook" + 
-					" order by no desc";
-			pstmt = conn.prepareStatement(sql);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				long no = rs.getLong(1);
-				String name = rs.getString(2);
-				String password = rs.getString(3);
-				String contents = rs.getString(4);
-				String regDate = rs.getString(5);
-				GuestbookVo vo = new GuestbookVo();
-				vo.setNo(no);
-				vo.setName(name);
-				vo.setPassword(password);
-				vo.setContents(contents);
-				vo.setRegDate(regDate);
-				
-				result.add(vo);
-			}
-
-		} catch (SQLException e) {
-			throw new GuestbookRepositoryException(e.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
+		List<GuestbookVo> result = sqlSession.selectList("guestbook.findAll");
 		return result;
 	}
 	public int insert(GuestbookVo vo) {
