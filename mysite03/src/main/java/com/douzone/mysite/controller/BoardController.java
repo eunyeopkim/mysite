@@ -2,8 +2,6 @@ package com.douzone.mysite.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +15,7 @@ import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.security.Auth;
+import com.douzone.security.AuthUser;
 
 @Controller
 @RequestMapping("/board")
@@ -42,12 +41,11 @@ public class BoardController {
 	
 	@Auth
 	@RequestMapping(value ="/write", method=RequestMethod.POST)
-	public String write(HttpSession session,
+	public String write(@AuthUser UserVo authUser,
 			@ModelAttribute BoardVo boardVo,
 			@RequestParam( value="p", required=true, defaultValue="1") Integer page,
 			@RequestParam( value="kwd", required=true, defaultValue="") String keyword) {
 		/////////////////////////////////////////////////////////////
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		if(authUser == null) {
 		return "redirect:/";
 		}
@@ -78,30 +76,26 @@ public class BoardController {
 	}
 	@Auth
 	@RequestMapping("/delete/{no}")
-	public String delete(HttpSession session,
+	public String delete(@AuthUser UserVo authUser,
 				@PathVariable("no") Long boardNo,
 				@RequestParam( value="p", required=true, defaultValue="1") Integer page,
 				@RequestParam( value="kwd", required=true, defaultValue="") String keyword) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		boardService.deleteContents(boardNo,authUser.getNo());
 		return "redirect:/board";
 	}
 	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET )
-	public String modify(HttpSession session,
+	public String modify(@AuthUser UserVo authUser,
 				@PathVariable("no") Long boardNo,
 				Model model) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		BoardVo boardVo = boardService.getContents(boardNo,authUser.getNo());
 		model.addAttribute("boardVo", boardVo);
 		return "board/modify";
 	}
 	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.POST )
-	public String modify(HttpSession session,
+	public String modify(@AuthUser UserVo authUser,
 				@ModelAttribute BoardVo boardVo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-
 		boardVo.setUserNo(authUser.getNo());
 		boardService.modifyContents(boardVo);
 		return "redirect:/board/view/" + boardVo.getNo();

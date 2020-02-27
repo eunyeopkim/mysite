@@ -1,8 +1,5 @@
 package com.douzone.mysite.controller;
 
-import javax.annotation.Resource.AuthenticationType;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 import com.douzone.security.Auth;
+import com.douzone.security.AuthUser;
 
 
-@Auth
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -29,9 +27,7 @@ public class UserController {
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(UserVo vo) {
-		System.out.println(vo);
 		userService.join(vo);
-		System.out.println(vo);
 		return "redirect:/user/joinsuccess";
 	}
 	
@@ -47,8 +43,8 @@ public class UserController {
 
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
+	public String update(@AuthUser UserVo authUser, Model model) {
+		
 		Long no = authUser.getNo();
 		UserVo vo = userService.getUser(no);
 		
@@ -58,8 +54,7 @@ public class UserController {
 	
 	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
+	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 		userVo.setNo(authUser.getNo());
 		userService.updateUser(userVo);
 		
