@@ -20,6 +20,9 @@ public class BoardService {
 	private BoardRepository boardRepository;
 
 	public Boolean writeContents(BoardVo boardVo) {
+		if( boardVo.getgNo() != null  ) {
+			orderNoUpdate(boardVo);
+		}
 		int count = boardRepository.insert(boardVo);
 		return count == 1;
 	}
