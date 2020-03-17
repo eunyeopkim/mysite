@@ -45,7 +45,6 @@ public class BoardRepository {
 
 	public int modify(BoardVo boardVo) {
 		return sqlSession.update("board.update", boardVo);
-
 	}
 
 	public int getCount(String kwd) {
