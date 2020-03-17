@@ -1,5 +1,7 @@
 package com.douzone.mysite.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,7 @@ import com.douzone.mysite.vo.SiteVo;
 public class MainController {
 	@Autowired
 	private AdminService adminService;
-	
+
 	@RequestMapping( {"", "/main"} )
 	public String index(
 		Model model) {
