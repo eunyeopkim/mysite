@@ -4,7 +4,7 @@
 
 	<select id="findAll" resultType="guestbookvo">
 		<![CDATA[
-		select no,,
+		select no,
 		 name, password, contents, reg_date as regDate
 		  from guestbook
 		 order by no desc

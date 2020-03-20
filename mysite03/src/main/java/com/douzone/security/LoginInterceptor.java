@@ -25,6 +25,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		vo.setPassword(password);
 		
 		UserVo authUser = userService.getUser(vo);
+		
 		if(authUser == null) {
 			// 비밀번호 틀렸을때
 			request.setAttribute("userVo", vo);

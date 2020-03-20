@@ -10,7 +10,7 @@
 	<artifactId>mysite03</artifactId>
 	<packaging>war</packaging>
 	
-		<properties>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<org.springframework-version>4.3.8.RELEASE</org.springframework-version>
@@ -53,6 +53,13 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
+		</dependency>
+		
+		<!-- spring aspect -->
+		<dependency>
+	    	<groupId>org.springframework</groupId>
+	    	<artifactId>spring-aspects</artifactId>
+	    	<version>${org.springframework-version}</version>
 		</dependency>
 		
 		<!-- MyBatis -->
@@ -101,6 +108,20 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
+		</dependency>
+		
+		
+		<!-- validation -->
+		<dependency>
+		   <groupId>javax.validation</groupId>
+		   <artifactId>validation-api</artifactId>
+		   <version>1.0.0.GA</version>
+		</dependency>
+		
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <version>4.2.0.Final</version>
 		</dependency>
 		
 		
