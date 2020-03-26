@@ -9,7 +9,7 @@
 	</context-param>
  	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>com.douzone.mysite.config.Appconfig</param-value>
+		<param-value>com.douzone.mysite.config.AppConfig</param-value>
 	</context-param>
 
 	<listener>
@@ -44,7 +44,7 @@
 		</init-param>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>com.douzone.mysite.config.Webconfig</param-value>
+			<param-value>com.douzone.mysite.config.WebConfig</param-value>
 		</init-param>
 	</servlet>
 
