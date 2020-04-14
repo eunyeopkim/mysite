@@ -8,21 +8,21 @@ import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import com.douzone.mysite.config.Appconfig;
-import com.douzone.mysite.config.Webconfig;
+import com.douzone.mysite.config.AppConfig;
+import com.douzone.mysite.config.WebConfig;
 
 public class MysiteWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		// Root Application Context
-		return new Class<?>[] {Appconfig.class};
+		return new Class<?>[] {AppConfig.class};
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
 		// Web Application Context
-		return new Class<?>[] {Webconfig.class};
+		return new Class<?>[] {WebConfig.class};
 	}
 
 	@Override

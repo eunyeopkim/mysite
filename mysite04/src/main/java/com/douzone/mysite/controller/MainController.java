@@ -17,6 +17,7 @@ public class MainController {
 	@RequestMapping( {"", "/main"} )
 	public String index(
 		Model model) {
+		System.out.println("dwqdwq");
 		SiteVo siteVo = new SiteVo();
 		siteVo = adminService.siteView();
 		model.addAttribute("siteVo", siteVo);
