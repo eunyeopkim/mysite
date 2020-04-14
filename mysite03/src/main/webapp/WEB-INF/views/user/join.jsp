@@ -26,7 +26,11 @@ $(function(){
 			data: '',
 			dataType: 'json',
 			success: function(response){
-				if(response.result == 'exist'){
+				if(response.result == "fail"){
+					console.error(response.message);
+					return;
+				}
+				if(response.data == true){
 					alert('이미 존재하는 이메일입니다.');
 					$('#email')
 						.val('')
