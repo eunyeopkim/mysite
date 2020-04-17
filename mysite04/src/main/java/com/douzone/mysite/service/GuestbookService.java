@@ -19,6 +19,7 @@ public class GuestbookService {
 		return guestbookRepository.findAll();
 		
 	}
+	
 	public Boolean insert(GuestbookVo vo) {
 		int count = guestbookRepository.insert(vo);
 		return count == 1;
@@ -32,6 +33,10 @@ public class GuestbookService {
 		return count == 1;
 	}
 
+	public List<GuestbookVo> list(Long startNo) {
+		return guestbookRepository.findAll(startNo);
+	}
+	
 	
 		
 	

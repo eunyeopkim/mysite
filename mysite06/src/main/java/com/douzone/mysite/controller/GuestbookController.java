@@ -50,6 +50,11 @@ public class GuestbookController {
 		return "redirect:/guestbook";
 	}
 	
+	@RequestMapping("/spa")
+	public String listSpa(Model model) {
+		return "guestbook/index-spa";
+	}
+	
 	
 	
 }
